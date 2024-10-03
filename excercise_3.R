@@ -34,6 +34,8 @@ g <- graph_from_adjacency_matrix(z, mode = "undirected")
 mi_layout = layout_with_kk(g)
 plot(g, layout = mi_layout, vertex.size = 1, vertex.label="")
 
+#write_graph(g, file = "example_graph.graphml", format = "graphml")
+
 # what if we try other thresholds?
 
 

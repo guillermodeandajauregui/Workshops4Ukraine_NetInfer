@@ -44,3 +44,9 @@ mi_matrix <-
 
 
 # pheatmap::pheatmap(mi_matrix)
+
+# mi_matrix |> 
+#   as.data.frame() |> 
+#   rownames_to_column(var = "gene") |> 
+#   as_tibble() |> 
+#   vroom::vroom_write("mi_matrix.txt")

@@ -20,22 +20,13 @@ rownames(y) <- x$hgnc_symbol
 
 ## we will convert each row into a discrete variable 
 
-y[1:5, 1:5]
 
-tibble(x = y[1,],
-       y = discretize(X = y[1,], disc = "equalfreq", )
-       ) |> 
-  group_by(y) |> 
-  tally()
-
-y_list <- split(y, row(y))
-names(y_list) <- rownames(y)
 
 y_discretized <- 
   lapply(y_list, function(i){
   discretize(X = i, 
-             disc = "equalfreq", 
-             nbins = round(length(i)^(1/3))) |> 
+             disc = "equalfreq", #extra: try other options
+             nbins = round(length(i)^(1/3))) |> #extra: try other values
       unlist() |> as.numeric()
                         }
   )
@@ -44,4 +35,12 @@ y_discretized <-
 
 # calculate MI ----
 
+mi_matrix <- 
+  sapply(X = y_discretized, FUN = function(i){
+  sapply(X = y_discretized, FUN = function(j){
+    mutinformation(X = i, Y = j, method = "emp")
+  })
+})
 
+
+# pheatmap::pheatmap(mi_matrix)
